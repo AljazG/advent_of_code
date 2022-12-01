@@ -39,7 +39,6 @@ void checkIfTopThree(list<long>& topThree, long value){
 int main() {
 
     list<long> topThree;
-    list<long> topThreeI;
     long sum = 0;
 
     ifstream file;
