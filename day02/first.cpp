@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-#include "../common/string_utils.h"
 
+using namespace std;
 
 const int ROCK = 1;
 const int PAPER = 2;
@@ -16,9 +16,6 @@ map<char, int> rpsMap = {
     {'B', PAPER},
     {'C', SCISSORS},
 };
-
-
-using namespace std;
 
 int mapToRps(char character) {
   return rpsMap[character];

@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-#include "../common/string_utils.h"
 
+using namespace std;
 
 const int ROCK = 1;
 const int PAPER = 2;
@@ -12,7 +12,6 @@ const int LOSE = 4;
 const int DRAW = 5;
 const int WIN = 6;
 
-
 map<char, int> rpsMap = {
     {'A', ROCK},
     {'B', PAPER},
@@ -21,9 +20,6 @@ map<char, int> rpsMap = {
     {'Y', DRAW},
     {'Z', WIN},
 };
-
-
-using namespace std;
 
 int mapToRps(char character) {
   return rpsMap[character];
@@ -54,7 +50,6 @@ int calculateScore(int elf, int outcome) {
             return PAPER;
         }
     }
-
     // shouldn't come here
     return 0;
 }
