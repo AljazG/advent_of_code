@@ -3,6 +3,8 @@ project(advent_of_code)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_CXX_FLAGS "-O3")
+
 add_executable(day01-first day01/first.cpp)
 add_executable(day01-second day01/second.cpp)
 add_executable(day02-first day02/first.cpp)
@@ -12,3 +14,5 @@ add_executable(day03-first day03/first.cpp)
 add_executable(day03-second day03/second.cpp)
 add_executable(day04-first day04/first.cpp)
 add_executable(day04-second day04/second.cpp)
+add_executable(day05-first day05/first.cpp)
+add_executable(day05-second day05/second.cpp)

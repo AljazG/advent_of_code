@@ -10,6 +10,8 @@ pair<int, int> getRange(string &string);
 bool contains(pair<int,int> &p1, pair<int,int> &p2);
 
 int main() {
+    std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
     ifstream file;
 
     file.open("../data/day04/input.txt");
@@ -32,16 +34,20 @@ int main() {
 
             pair<int, int> firstPair = getRange(first);
             pair<int, int> secondPair = getRange(second);
-            cout <<  firstPair.first << " " << firstPair.second;
-            cout <<  " and " <<  secondPair.first << " " << secondPair.second << "\n";
 
             if (contains(firstPair, secondPair)) {
                 counter ++;
-                cout << "BINGO! \n";
             }
         }
         cout << "counter: " << counter << "\n";
+
     }
+    file.close();
+
+    std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+
+    std::cout << "Execution time: " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << std::endl;
+
     return 0;
 }
 
