@@ -10,6 +10,8 @@ void constructStackList(vector<stack<char>> &stackList, vector<string> &drawingL
 
 void makeMoves(vector<string> &moves, vector<stack<char>> &stackList);
 
+void printStacks(vector<stack<char>> stackList);
+
 int main() {
 
     ifstream file;
@@ -51,6 +53,8 @@ int main() {
 
     makeMoves(moves, stackList);
 
+    printStacks(stackList);
+
     for (stack<char> s : stackList) {
         cout << s.top();
     }
@@ -85,6 +89,7 @@ void constructStackList(vector<stack<char>> &stackList, vector<string> &drawingL
 
 void makeMoves(vector<string> &moves, vector<stack<char>> &stackList) {
     for(string &move : moves) {
+        printStacks(stackList);
         stringstream ss(move);
         string ammountStr;
         string fromStr;
@@ -113,5 +118,44 @@ void makeMoves(vector<string> &moves, vector<stack<char>> &stackList) {
         }
 
     }
+}
+
+void printStacks(vector<stack<char>> stackList) {
+
+    int maxHeight = 0;
+
+    for (auto &stack : stackList) {
+        if (stack.size() > maxHeight) {
+            maxHeight = stack.size();
+        }
+    }
+
+    for (int i = maxHeight; i >= 1; --i) {
+        for (int j = 0; j < stackList.size(); j++) {
+            if (stackList[j].size() >= i) {
+                cout << "[" << stackList[j].top() << "]";
+                stackList[j].pop();
+            } else {
+                cout << "   ";
+            }
+        }
+        cout << "\n";
+    }
+
+    for (int i = 0; i < stackList.size(); i++) {
+        if (i == 0)
+            cout << " " << i+1;
+        else
+            cout << "  " << i+1;
+    }
+
+    cout << "\n";
+
+    for (int i = 0; i < stackList.size(); i++) {
+        cout << "---";
+    }
+
+    cout << "\n";
+
 }
 
