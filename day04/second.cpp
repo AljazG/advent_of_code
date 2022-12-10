@@ -7,7 +7,7 @@ using namespace std;
 
 pair<int, int> getRange(string &string);
 
-bool contains(pair<int,int> &p1, pair<int,int> &p2);
+bool contains(pair<int, int> &p1, pair<int, int> &p2);
 
 int main() {
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
@@ -20,7 +20,7 @@ int main() {
 
     int counter = 0;
 
-    if (file.is_open()){
+    if (file.is_open()) {
         string line;
         while (getline(file, line)) {
 
@@ -36,7 +36,7 @@ int main() {
             pair<int, int> secondPair = getRange(second);
 
             if (contains(firstPair, secondPair)) {
-                counter ++;
+                counter++;
             }
         }
         cout << "counter: " << counter << "\n";
@@ -46,7 +46,8 @@ int main() {
 
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
-    std::cout << "Execution time: " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << std::endl;
+    std::cout << "Execution time: " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count()
+              << std::endl;
 
     return 0;
 }
@@ -57,11 +58,11 @@ pair<int, int> getRange(string &str) {
     string second;
     getline(ss, first, '-');
     getline(ss, second, '-');
-    pair<int, int> out(stol(&first[0]),stol(&second[0]));
+    pair<int, int> out(stol(&first[0]), stol(&second[0]));
     return out;
 }
 
-bool contains(pair<int,int> &p1, pair<int,int> &p2) {
+bool contains(pair<int, int> &p1, pair<int, int> &p2) {
     if (p1.first >= p2.first && p1.first <= p2.second) {
         return true;
     }

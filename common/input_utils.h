@@ -4,13 +4,12 @@
 
 using namespace std;
 
-namespace input_utils
-{
-    vector<string> readLines(const char* fileLocation) {
+namespace input_utils {
+    vector<string> readLines(const char *fileLocation) {
         vector<string> lines;
         ifstream file;
         file.open(fileLocation);
-        if (file.is_open()){
+        if (file.is_open()) {
             string line;
             while (getline(file, line)) {
                 lines.push_back(line);
@@ -20,10 +19,10 @@ namespace input_utils
         return lines;
     }
 
-    string readLinesConcat(const char* fileLocation) {
+    string readLinesConcat(const char *fileLocation) {
         vector<string> lines = readLines(fileLocation);
         string concat;
-        for (string &line : lines) {
+        for (string &line: lines) {
             concat += line;
         }
         return concat;

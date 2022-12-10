@@ -9,22 +9,22 @@ const int PAPER = 2;
 const int SCISSORS = 3;
 
 map<char, int> rpsMap = {
-    {'X', ROCK},
-    {'Y', PAPER},
-    {'Z', SCISSORS},
-    {'A', ROCK},
-    {'B', PAPER},
-    {'C', SCISSORS},
+        {'X', ROCK},
+        {'Y', PAPER},
+        {'Z', SCISSORS},
+        {'A', ROCK},
+        {'B', PAPER},
+        {'C', SCISSORS},
 };
 
 int mapToRps(char character) {
-  return rpsMap[character];
+    return rpsMap[character];
 }
 
 int calculateScore(int elf, int me) {
     // draw
     if (elf == me) {
-       return 3 + me;
+        return 3 + me;
     }
     // win
     if (elf == ROCK && me == PAPER) {
@@ -46,7 +46,7 @@ int main() {
 
     long sum = 0;
 
-    if (file.is_open()){
+    if (file.is_open()) {
         string line;
         while (getline(file, line)) {
             int elf = mapToRps(line[0]);

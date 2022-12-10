@@ -9,19 +9,19 @@ struct dir;
 struct file {
     string name;
     long size;
-    dir* dir;
+    dir *dir;
 };
 
 struct dir {
     long size;
     string name;
-    dir* parent;
-    list<dir*> subDirectories;
-    list<file*> files;
+    dir *parent;
+    list<dir *> subDirectories;
+    list<file *> files;
 };
 
-bool hasDir (dir* current, string &name) {
-    for (auto sub : current->subDirectories) {
+bool hasDir(dir *current, string &name) {
+    for (auto sub: current->subDirectories) {
         if (sub->name == name) {
             return true;
         }
@@ -29,8 +29,8 @@ bool hasDir (dir* current, string &name) {
     return false;
 }
 
-bool hasFile(dir* current, string &name) {
-    for (auto sub : current->files) {
+bool hasFile(dir *current, string &name) {
+    for (auto sub: current->files) {
         if (sub->name == name) {
             return true;
         }
@@ -42,42 +42,42 @@ const long MAX_DIR_SIZE = 100000;
 const long MIN_UNUSED_SPACE = 30000000;
 const long DISK_SPACE = 70000000;
 
-void printTree(dir* current, string indent) {
+void printTree(dir *current, string indent) {
 
     cout << current->name << ": " << indent;
-    for (auto file : current->files) {
-        cout << file->name <<  "(" <<file->size << ") ";
+    for (auto file: current->files) {
+        cout << file->name << "(" << file->size << ") ";
     }
 
-    for (auto sub : current->subDirectories) {
+    for (auto sub: current->subDirectories) {
         cout << sub->name << " ";
     }
     cout << "\n";
 
     indent = indent + "    ";
 
-    for (auto sub : current->subDirectories) {
+    for (auto sub: current->subDirectories) {
         printTree(sub, indent);
     }
 }
 
-long getDirSizes(dir* current, list<dir*> &dirSizes) {
+long getDirSizes(dir *current, list<dir *> &dirSizes) {
 
     long sum = 0;
-    for (auto file : current->files) {
-       sum += (file->size);
+    for (auto file: current->files) {
+        sum += (file->size);
     }
 
     long subSum = 0;
-     for (auto sub : current->subDirectories) {
-         subSum += getDirSizes(sub, dirSizes);
+    for (auto sub: current->subDirectories) {
+        subSum += getDirSizes(sub, dirSizes);
     }
 
-     current->size = subSum + sum;
+    current->size = subSum + sum;
 
-     dirSizes.push_back(current);
+    dirSizes.push_back(current);
 
-     return subSum + sum;
+    return subSum + sum;
 
 }
 
@@ -87,10 +87,10 @@ int main() {
 
     dir root;
     root.parent = nullptr;
-    root.name= "/";
-    dir* current = &root;
+    root.name = "/";
+    dir *current = &root;
 
-    for (auto command : commands) {
+    for (auto command: commands) {
         vector<string> split = string_utils::split(command);
 
         if (split.at(0) == "$") {
@@ -103,7 +103,7 @@ int main() {
                             current = current->parent;
                         }
                     } else {
-                        for (auto dir : current->subDirectories) {
+                        for (auto dir: current->subDirectories) {
                             if (dir->name == split.at(2)) {
                                 current = dir;
                                 break;
@@ -136,7 +136,7 @@ int main() {
     cout << "DIRECTORY STRUCTURE\n";
     cout << "----------------------------------------------\n";
     printTree(current, (string &) "");
-    list<dir*> dirs;
+    list<dir *> dirs;
     long usedSpace = getDirSizes(current, dirs);
 
     cout << "----------------------------------------------\n";
@@ -147,22 +147,21 @@ int main() {
 
     int id = 0;
 
-    for (auto &dir : dirs) {
+    for (auto &dir: dirs) {
         cout << id << " " << dir->name << ": " << dir->size;
         if (dir->size <= MAX_DIR_SIZE) {
             counter += dir->size;
         }
-        cout<< "\n";
+        cout << "\n";
         id++;
     }
 
 
-
     long unusedSpace = DISK_SPACE - usedSpace;
-    dir* dirToDelete = &root;
+    dir * dirToDelete = &root;
 
-    for (auto &dir : dirs) {
-        if ((unusedSpace + dir->size) >= MIN_UNUSED_SPACE && dir->size < dirToDelete->size ) {
+    for (auto &dir: dirs) {
+        if ((unusedSpace + dir->size) >= MIN_UNUSED_SPACE && dir->size < dirToDelete->size) {
             dirToDelete = dir;
         }
     }

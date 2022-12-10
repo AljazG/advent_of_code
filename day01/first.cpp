@@ -15,7 +15,7 @@ int main() {
 
     file.open("../data/day01/input.txt");
 
-    if (file.is_open()){
+    if (file.is_open()) {
         string line;
         while (getline(file, line)) {
             if (!string_utils::isBlank(line)) {

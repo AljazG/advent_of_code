@@ -3,7 +3,8 @@
 #include "../common/input_utils.h"
 #include "../common/string_utils.h"
 
-void makeMove(pair<int, int> &head, pair<int, int> &tail, set<pair<int, int>> &visitedPositions, char command, int numOfMoves);
+void makeMove(pair<int, int> &head, pair<int, int> &tail, set<pair<int, int>> &visitedPositions, char command,
+              int numOfMoves);
 
 void moveRight(pair<int, int> &head, pair<int, int> &tail, set<pair<int, int>> &visitedPositions);
 
@@ -28,7 +29,7 @@ int main() {
 
     visitedPositions.insert(tailPosition);
 
-    for (string command : commands) {
+    for (string command: commands) {
         vector<string> split = string_utils::split(command);
         makeMove(headPosition, tailPosition, visitedPositions, split.at(0)[0], stoi(split.at(1)));
     }
@@ -42,7 +43,8 @@ int main() {
     return 0;
 }
 
-void makeMove(pair<int, int> &head, pair<int, int> &tail, set<pair<int, int>> &visitedPositions, char command, int numOfMoves) {
+void makeMove(pair<int, int> &head, pair<int, int> &tail, set<pair<int, int>> &visitedPositions, char command,
+              int numOfMoves) {
     for (int i = 0; i < numOfMoves; i++) {
         if (command == 'R') {
             moveRight(head, tail, visitedPositions);
@@ -84,19 +86,19 @@ void moveDown(pair<int, int> &head, pair<int, int> &tail, set<pair<int, int>> &v
 }
 
 void moveTail(pair<int, int> &head, pair<int, int> &tail) {
-    if (distance(head, tail) < 4 ) {
+    if (distance(head, tail) < 4) {
         return;
     }
 
-    list<pair<int,int>> possibleMoves;
+    list<pair<int, int>> possibleMoves;
     pair<int, int> closestPoint(head.first, head.second);
 
-    possibleMoves.emplace_back(head.first + 1,head.second);
-    possibleMoves.emplace_back(head.first - 1,head.second);
-    possibleMoves.emplace_back(head.first,head.second + 1);
-    possibleMoves.emplace_back(head.first,head.second - 1);
+    possibleMoves.emplace_back(head.first + 1, head.second);
+    possibleMoves.emplace_back(head.first - 1, head.second);
+    possibleMoves.emplace_back(head.first, head.second + 1);
+    possibleMoves.emplace_back(head.first, head.second - 1);
 
-    for (auto &possibleMove : possibleMoves) {
+    for (auto &possibleMove: possibleMoves) {
         if (distance(tail, possibleMove) < distance(tail, closestPoint)) {
             closestPoint = possibleMove;
         }
@@ -106,5 +108,5 @@ void moveTail(pair<int, int> &head, pair<int, int> &tail) {
 }
 
 int distance(pair<int, int> &a, pair<int, int> &b) {
-    return abs(a.first - b.first) + abs(a.second- b.second) + max(abs(a.first - b.first), abs(a.second- b.second));
+    return abs(a.first - b.first) + abs(a.second - b.second) + max(abs(a.first - b.first), abs(a.second - b.second));
 }

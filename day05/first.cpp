@@ -25,13 +25,13 @@ int main() {
     bool drawingRead = false;
     int colNum = 0;
 
-    if (file.is_open()){
+    if (file.is_open()) {
         string line;
         while (getline(file, line)) {
             // read drawing
             if (!drawingRead) {
                 // last line of drawing
-                if(line[1] == '1') {
+                if (line[1] == '1') {
                     drawingRead = true;
                     for (int i = line.size() - 1; i >= 0; --i) {
                         if (line[i] != ' ') {
@@ -42,7 +42,7 @@ int main() {
                 } else {
                     drawingLines.push_back(line);
                 }
-            } else if (line[0] != ' ' && !line.empty()){
+            } else if (line[0] != ' ' && !line.empty()) {
                 // read moves
                 moves.push_back(line);
             }
@@ -55,7 +55,7 @@ int main() {
 
     printStacks(stackList);
 
-    for (stack<char> s : stackList) {
+    for (stack<char> s: stackList) {
         cout << s.top();
     }
 
@@ -72,13 +72,13 @@ void constructStackList(vector<stack<char>> &stackList, vector<string> &drawingL
         stackList.push_back(s);
     }
 
-    for (int i = drawingLines.size() - 1; i>=0; --i) {
+    for (int i = drawingLines.size() - 1; i >= 0; --i) {
         string line = drawingLines.at(i);
         int j = 1;
         int stackNum = 0;
         while (j < numOfCharsInLine) {
             char x = line[j];
-            if ( x != ' ' && x != '\0') {
+            if (x != ' ' && x != '\0') {
                 stackList.at(stackNum).push(x);
             }
             stackNum++;
@@ -88,17 +88,17 @@ void constructStackList(vector<stack<char>> &stackList, vector<string> &drawingL
 }
 
 void makeMoves(vector<string> &moves, vector<stack<char>> &stackList) {
-    for(string &move : moves) {
+    for (string &move: moves) {
         printStacks(stackList);
         stringstream ss(move);
         string ammountStr;
         string fromStr;
         string toStr;
 
-        getline(ss, ammountStr,' ');
+        getline(ss, ammountStr, ' ');
         getline(ss, ammountStr, ' ');
 
-        getline(ss, fromStr,' ');
+        getline(ss, fromStr, ' ');
         getline(ss, fromStr, ' ');
 
         getline(ss, toStr, ' ');
@@ -108,8 +108,8 @@ void makeMoves(vector<string> &moves, vector<stack<char>> &stackList) {
         int fromId = stoi(&fromStr[0]);
         int toId = stoi(&toStr[0]);
 
-        stack<char> *from = &stackList.at(fromId-1);
-        stack<char> *to = &stackList.at(toId-1);
+        stack<char> *from = &stackList.at(fromId - 1);
+        stack<char> *to = &stackList.at(toId - 1);
 
         for (int i = 0; i < ammount; i++) {
             char x = (*from).top();
@@ -124,7 +124,7 @@ void printStacks(vector<stack<char>> stackList) {
 
     int maxHeight = 0;
 
-    for (auto &stack : stackList) {
+    for (auto &stack: stackList) {
         if (stack.size() > maxHeight) {
             maxHeight = stack.size();
         }
@@ -144,9 +144,9 @@ void printStacks(vector<stack<char>> stackList) {
 
     for (int i = 0; i < stackList.size(); i++) {
         if (i == 0)
-            cout << " " << i+1;
+            cout << " " << i + 1;
         else
-            cout << "  " << i+1;
+            cout << "  " << i + 1;
     }
 
     cout << "\n";

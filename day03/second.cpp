@@ -5,9 +5,9 @@
 
 using namespace std;
 
-int getPriority (string& first, string& second, string& third);
+int getPriority(string &first, string &second, string &third);
 
-int getCharValue(char& x);
+int getCharValue(char &x);
 
 int main() {
 
@@ -17,7 +17,7 @@ int main() {
 
     vector<string> list;
 
-    if (file.is_open()){
+    if (file.is_open()) {
         string line;
         while (getline(file, line)) {
             list.push_back(line);
@@ -30,12 +30,12 @@ int main() {
 
     while (i < list.size()) {
         string first = list.at(i);
-        string second = list.at(i+1);
-        string third = list.at(i+2);
+        string second = list.at(i + 1);
+        string third = list.at(i + 2);
 
         int priority = getPriority(first, second, third);
         prioritySum += priority;
-        i = i+3;
+        i = i + 3;
     }
 
     file.close();
@@ -46,11 +46,11 @@ int main() {
     return 0;
 }
 
-int getPriority(string& first, string& second, string& third) {
-    for (char& e1 : first) {
-        for (char& e2 : second) {
+int getPriority(string &first, string &second, string &third) {
+    for (char &e1: first) {
+        for (char &e2: second) {
             if (e1 == e2) {
-                for (char& e3 : third) {
+                for (char &e3: third) {
                     if (e1 == e3) {
                         return getCharValue(e1);
                     }
@@ -61,7 +61,7 @@ int getPriority(string& first, string& second, string& third) {
     return 0;
 }
 
-int getCharValue(char& x) {
+int getCharValue(char &x) {
     if (x >= 'a' && x <= 'z') {
         return (x - 'a') + 1;
     } else {

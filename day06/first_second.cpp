@@ -5,7 +5,7 @@ using namespace std;
 
 bool containsDuplicates(list<char> &charList) {
     for (auto it = charList.begin(); it != charList.end(); ++it) {
-        for (auto it2 = it; it2 != charList.end(); ++it2 ) {
+        for (auto it2 = it; it2 != charList.end(); ++it2) {
             if (*it == *it2 && it != it2) {
                 return true;
             }
@@ -23,12 +23,12 @@ int main() {
 
     int index = -1;
 
-    for(int i = 0; i < inputString.size(); i++) {
+    for (int i = 0; i < inputString.size(); i++) {
         if (previous.size() < previousSize) {
-           previous.push_back(inputString[i]);
+            previous.push_back(inputString[i]);
         } else if (containsDuplicates(previous)) {
-           previous.erase(previous.begin());
-           previous.push_back(inputString[i]);
+            previous.erase(previous.begin());
+            previous.push_back(inputString[i]);
         } else {
             index = i;
             break;
@@ -39,7 +39,7 @@ int main() {
         index = (int) inputString.size() - 1;
     }
 
-    for (auto &e :previous) {
+    for (auto &e: previous) {
         cout << e;
     }
 

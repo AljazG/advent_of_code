@@ -7,7 +7,7 @@ using namespace std;
 
 pair<int, int> getRange(string &string);
 
-bool contains(pair<int,int> &p1, pair<int,int> &p2);
+bool contains(pair<int, int> &p1, pair<int, int> &p2);
 
 int main() {
     ifstream file;
@@ -18,7 +18,7 @@ int main() {
 
     int counter = 0;
 
-    if (file.is_open()){
+    if (file.is_open()) {
         string line;
         while (getline(file, line)) {
 
@@ -32,11 +32,11 @@ int main() {
 
             pair<int, int> firstPair = getRange(first);
             pair<int, int> secondPair = getRange(second);
-            cout <<  firstPair.first << " " << firstPair.second;
-            cout <<  " and " <<  secondPair.first << " " << secondPair.second << "\n";
+            cout << firstPair.first << " " << firstPair.second;
+            cout << " and " << secondPair.first << " " << secondPair.second << "\n";
 
             if (contains(firstPair, secondPair)) {
-                counter ++;
+                counter++;
                 cout << "BINGO! \n";
             }
         }
@@ -51,11 +51,11 @@ pair<int, int> getRange(string &str) {
     string second;
     getline(ss, first, '-');
     getline(ss, second, '-');
-    pair<int, int> out(stol(&first[0]),stol(&second[0]));
+    pair<int, int> out(stol(&first[0]), stol(&second[0]));
     return out;
 }
 
-bool contains(pair<int,int> &p1, pair<int,int> &p2) {
+bool contains(pair<int, int> &p1, pair<int, int> &p2) {
     if (p1.first >= p2.first && p1.second <= p2.second) {
         return true;
     }

@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void cropTopThree(list<long>& topThree, list<long>::iterator iter, int counter){
+void cropTopThree(list<long> &topThree, list<long>::iterator iter, int counter) {
     for (auto it = iter; it != topThree.end(); ++it) {
         if (counter > 1) {
             topThree.erase(it, topThree.end());
@@ -15,7 +15,7 @@ void cropTopThree(list<long>& topThree, list<long>::iterator iter, int counter){
     }
 }
 
-void checkIfTopThree(list<long>& topThree, long value){
+void checkIfTopThree(list<long> &topThree, long value) {
     if (topThree.empty()) {
         topThree.push_front(value);
         return;
@@ -45,7 +45,7 @@ int main() {
 
     file.open("../data/day01/input.txt");
 
-    if (file.is_open()){
+    if (file.is_open()) {
         string line;
         while (getline(file, line)) {
             if (!string_utils::isBlank(line)) {

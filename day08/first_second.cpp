@@ -1,7 +1,7 @@
 #include <list>
 #include "../common/input_utils.h"
 
-bool isVisible( int i, int j, int** grid, int cols, int rows) {
+bool isVisible(int i, int j, int **grid, int cols, int rows) {
 
     //check left
     for (int x = 0; x <= j; x++) {
@@ -46,7 +46,7 @@ bool isVisible( int i, int j, int** grid, int cols, int rows) {
     return false;
 }
 
-int getScenicScore( int i, int j, int** grid, int cols, int rows) {
+int getScenicScore(int i, int j, int **grid, int cols, int rows) {
 
     int left = 0;
     int right = 0;
@@ -54,7 +54,7 @@ int getScenicScore( int i, int j, int** grid, int cols, int rows) {
     int down = 0;
 
     //check left
-    for (int x = j-1; x >= 0; x--) {
+    for (int x = j - 1; x >= 0; x--) {
         left++;
         if (grid[i][x] >= grid[i][j]) {
             break;
@@ -71,7 +71,7 @@ int getScenicScore( int i, int j, int** grid, int cols, int rows) {
 
     // check up
     for (int x = i - 1; x >= 0; x--) {
-        up ++;
+        up++;
         if (grid[x][j] >= grid[i][j]) {
             break;
         }
@@ -79,7 +79,7 @@ int getScenicScore( int i, int j, int** grid, int cols, int rows) {
 
     // check down
     for (int x = i + 1; x < rows; x++) {
-        down ++;
+        down++;
         if (grid[x][j] >= grid[i][j]) {
             break;
         }
@@ -95,9 +95,9 @@ int main() {
     int cols = (int) trees.at(0).size();
     int rows = (int) trees.size();
 
-    int** grid;
+    int **grid;
 
-    grid = new int*[rows];
+    grid = new int *[rows];
     for (int i = 0; i < rows; i++) {
         grid[i] = new int[cols];
         for (int j = 0; j < cols; j++) {
@@ -107,7 +107,7 @@ int main() {
 
     int counter = 0;
 
-    for (int i = 1; i < rows-1; i++) {
+    for (int i = 1; i < rows - 1; i++) {
         for (int j = 1; j < cols - 1; j++) {
             if (isVisible(i, j, grid, cols, rows)) {
                 counter++;
@@ -128,8 +128,8 @@ int main() {
 
     counter = counter + (cols * 2 + (rows - 2) * 2);
 
-    cout << counter  << "\n";
-    cout << scenicScoreMax  << "\n";
+    cout << counter << "\n";
+    cout << scenicScoreMax << "\n";
 
     return 0;
 }

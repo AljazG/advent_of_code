@@ -4,10 +4,9 @@
 
 using namespace std;
 
-namespace string_utils
-{
+namespace string_utils {
     bool isBlank(string &x) {
-       return x.empty() || x.find_first_not_of(' ') == string::npos;
+        return x.empty() || x.find_first_not_of(' ') == string::npos;
     }
 
     vector<string> split(string &s, string &delimiter) {
@@ -15,12 +14,12 @@ namespace string_utils
         string token;
         vector<string> res;
 
-        while ((pos_end = s.find (delimiter, pos_start)) != string::npos) {
-            token = s.substr (pos_start, pos_end - pos_start);
+        while ((pos_end = s.find(delimiter, pos_start)) != string::npos) {
+            token = s.substr(pos_start, pos_end - pos_start);
             pos_start = pos_end + delim_len;
-            res.push_back (token);
+            res.push_back(token);
         }
-        res.push_back (s.substr (pos_start));
+        res.push_back(s.substr(pos_start));
         return res;
     }
 
@@ -29,7 +28,7 @@ namespace string_utils
         stringstream ss(x);
         string element;
 
-        while(getline(ss, element,' ')) {
+        while (getline(ss, element, ' ')) {
             out.push_back(element);
         }
         return out;
