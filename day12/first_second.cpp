@@ -36,12 +36,14 @@ char checkStartEnd(char &x) {
     return x;
 }
 
-bool canTravel(pair<int, int> &fromPair, pair<int, int> &toPair, char **grid, int rows, int cols) {
+bool canTravel(pair<int, int> &fromPair, pair<int, int> &toPair, char **grid, int rows, int cols, bool reverse) {
     if (toPair.first < 0 || toPair.first >= rows || toPair.second < 0 || toPair.second >= cols) {
         return false;
     }
     char from = checkStartEnd(grid[fromPair.first][fromPair.second]);
     char to = checkStartEnd(grid[toPair.first][toPair.second]);
+    if (reverse)
+        return (from - 'a') <= (to - 'a') + 1;
     return (to - 'a') <= (from - 'a') + 1;
 }
 
@@ -58,6 +60,45 @@ pair<int, int> popMinDistPair(set<pair<int, int>> &nodesForSelection, int **grid
     return minNode;
 }
 
+void updateDistancesGrid(int** distancesGrid, pair<int,int> &current,
+                         set<pair<int, int>> &finishedNodes,set<pair<int, int>> &nodesForSelection,
+                         char** grid, int &rows, int &cols, bool reverse) {
+    pair<int, int> to(current.first, current.second + 1);
+    if (finishedNodes.count(to) == 0 && canTravel(current, to, grid, rows, cols, reverse)) {
+        if (distancesGrid[current.first][current.second] + 1 < distancesGrid[to.first][to.second]) {
+            distancesGrid[to.first][to.second] = distancesGrid[current.first][current.second] + 1;
+            nodesForSelection.insert(to);
+        }
+    }
+
+    to.first = current.first;
+    to.second = current.second - 1;
+    if (finishedNodes.count(to) == 0 && canTravel(current, to, grid, rows, cols, reverse)) {
+        if (distancesGrid[current.first][current.second] + 1 < distancesGrid[to.first][to.second]) {
+            distancesGrid[to.first][to.second] = distancesGrid[current.first][current.second] + 1;
+            nodesForSelection.insert(to);
+        }
+    }
+
+    to.first = current.first + 1;
+    to.second = current.second;
+    if (finishedNodes.count(to) == 0 && canTravel(current, to, grid, rows, cols, reverse)) {
+        if (distancesGrid[current.first][current.second] + 1 < distancesGrid[to.first][to.second]) {
+            distancesGrid[to.first][to.second] = distancesGrid[current.first][current.second] + 1;
+            nodesForSelection.insert(to);
+        }
+    }
+
+    to.first = current.first - 1;
+    to.second = current.second;
+    if (finishedNodes.count(to) == 0 && canTravel(current, to, grid, rows, cols, reverse)) {
+        if (distancesGrid[current.first][current.second] + 1 < distancesGrid[to.first][to.second]) {
+            distancesGrid[to.first][to.second] = distancesGrid[current.first][current.second] + 1;
+            nodesForSelection.insert(to);
+        }
+    }
+}
+
 int getMinDistance(pair<int, int> startPos, pair<int, int> endPos, char **grid, int rows, int cols) {
     int **distancesGrid = grid_utils::constructGridInt(rows, cols);
     grid_utils::fillGrid(INT_MAX, distancesGrid, rows, cols);
@@ -70,44 +111,8 @@ int getMinDistance(pair<int, int> startPos, pair<int, int> endPos, char **grid, 
 
     while (finishedNodes.count(endPos) == 0 && !nodesForSelection.empty()) {
         pair<int, int> current = popMinDistPair(nodesForSelection, distancesGrid);
-
-        pair<int, int> to(current.first, current.second + 1);
-        if (finishedNodes.count(to) == 0 && canTravel(current, to, grid, rows, cols)) {
-            if (distancesGrid[current.first][current.second] + 1 < distancesGrid[to.first][to.second]) {
-                distancesGrid[to.first][to.second] = distancesGrid[current.first][current.second] + 1;
-                nodesForSelection.insert(to);
-            }
-        }
-
-        to.first = current.first;
-        to.second = current.second - 1;
-        if (finishedNodes.count(to) == 0 && canTravel(current, to, grid, rows, cols)) {
-            if (distancesGrid[current.first][current.second] + 1 < distancesGrid[to.first][to.second]) {
-                distancesGrid[to.first][to.second] = distancesGrid[current.first][current.second] + 1;
-                nodesForSelection.insert(to);
-            }
-        }
-
-        to.first = current.first + 1;
-        to.second = current.second;
-        if (finishedNodes.count(to) == 0 && canTravel(current, to, grid, rows, cols)) {
-            if (distancesGrid[current.first][current.second] + 1 < distancesGrid[to.first][to.second]) {
-                distancesGrid[to.first][to.second] = distancesGrid[current.first][current.second] + 1;
-                nodesForSelection.insert(to);
-            }
-        }
-
-        to.first = current.first - 1;
-        to.second = current.second;
-        if (finishedNodes.count(to) == 0 && canTravel(current, to, grid, rows, cols)) {
-            if (distancesGrid[current.first][current.second] + 1 < distancesGrid[to.first][to.second]) {
-                distancesGrid[to.first][to.second] = distancesGrid[current.first][current.second] + 1;
-                nodesForSelection.insert(to);
-            }
-        }
-
+        updateDistancesGrid(distancesGrid, current, finishedNodes, nodesForSelection, grid, rows, cols, false);
         finishedNodes.insert(current);
-
     }
 
     if (nodesForSelection.empty() && finishedNodes.size() < (rows * cols)) {
@@ -115,6 +120,25 @@ int getMinDistance(pair<int, int> startPos, pair<int, int> endPos, char **grid, 
     }
 
     return distancesGrid[endPos.first][endPos.second];
+}
+
+int** getDistanceGrid(pair<int, int> startPos, char **grid, int rows, int cols) {
+    int **distancesGrid = grid_utils::constructGridInt(rows, cols);
+    grid_utils::fillGrid(INT_MAX, distancesGrid, rows, cols);
+
+    distancesGrid[startPos.first][startPos.second] = 0;
+
+    set<pair<int, int>> finishedNodes;
+    set<pair<int, int>> nodesForSelection;
+    nodesForSelection.insert(startPos);
+
+    while (!nodesForSelection.empty() && finishedNodes.size() < (rows * cols)) {
+        pair<int, int> current = popMinDistPair(nodesForSelection, distancesGrid);
+        updateDistancesGrid(distancesGrid, current, finishedNodes, nodesForSelection, grid, rows, cols, true);
+        finishedNodes.insert(current);
+    }
+
+    return distancesGrid;
 }
 
 
@@ -147,8 +171,10 @@ int main() {
 
     int minDist = INT_MAX;
 
+    int** distances = getDistanceGrid(endPos, grid, rows, cols);
+
     for (auto pos: startPosList) {
-        int dist = getMinDistance(pos, endPos, grid, rows, cols);
+        int dist = distances[pos.first][pos.second];
         if (dist < minDist) {
             minDist = dist;
         }
