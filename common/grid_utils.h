@@ -6,13 +6,13 @@ using namespace std;
 
 namespace grid_utils {
 
-    int getRowsFromInputVector(vector<string> input) {
-        return input.size();
+    int getRowsFromInputVector(vector<string> &input) {
+        return (int) input.size();
     }
 
-    int getColsFromInputVector(vector<string> input) {
+    int getColsFromInputVector(vector<string> &input) {
         if (!input.empty()) {
-            return input.at(0).size();
+            return (int) input.at(0).size();
         }
         return 0;
     }

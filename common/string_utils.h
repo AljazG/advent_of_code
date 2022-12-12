@@ -9,7 +9,7 @@ namespace string_utils {
         return x.empty() || x.find_first_not_of(' ') == string::npos;
     }
 
-    vector<string> split(string &s, string &delimiter) {
+    vector<string> split(string &s, const string &delimiter) {
         size_t pos_start = 0, pos_end, delim_len = delimiter.length();
         string token;
         vector<string> res;
