@@ -1,5 +1,5 @@
-#import <sstream>
-#import <vector>
+#include <sstream>
+#include <vector>
 #include <fstream>
 
 using namespace std;
